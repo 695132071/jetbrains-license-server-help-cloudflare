@@ -1,123 +1,98 @@
-// 赞助页面组件
+// 支持与资源页面组件
+const REPO_URL = 'https://github.com/Blduu/jetbrains-license-server-help-cloudflare'
+
 const SponsorComponent = {
   name: 'SponsorComponent',
   data() {
     return {
-      showPaymentModal: false,
-      selectedAmount: null,
-      selectedPaymentType: 'wx', // 'wx' 或 'zfb'
-      sponsorItems: [
+      showQrModal: false,
+      repoUrl: REPO_URL,
+      qrImage: '/images/repo-qr.png',
+      supportItems: [
         {
-          id: 'egg',
-          name: '一个鸡腿',
-          amount: 10,
-          icon: '🍗',
-          description: '请我吃个鸡腿'
+          id: 'star',
+          name: '点个 Star',
+          icon: '⭐',
+          description: '让更多人发现这个项目',
+          url: REPO_URL
         },
         {
-          id: 'coffee',
-          name: '一杯咖啡',
-          amount: 20,
+          id: 'issue',
+          name: '反馈问题',
+          icon: '🐛',
+          description: '提交 Issue 帮助改进',
+          url: `${REPO_URL}/issues`
+        },
+        {
+          id: 'contributing',
+          name: '参与贡献',
+          icon: '🔧',
+          description: '欢迎提交 Pull Request',
+          url: `${REPO_URL}/blob/main/CONTRIBUTING.md`
+        },
+        {
+          id: 'jvm',
+          name: 'JVM 版',
           icon: '☕',
-          description: '一杯提神咖啡'
+          description: 'Spring Boot 完整功能版本',
+          url: 'https://github.com/Blduu/jetbrains-helper'
         },
         {
-          id: 'burger',
-          name: '一个汉堡',
-          amount: 30,
-          icon: '🍔',
-          description: '美味汉堡套餐'
+          id: 'docs',
+          name: '使用文档',
+          icon: '📚',
+          description: '部署、接口与架构说明',
+          url: `${REPO_URL}/tree/main/docs`
         },
         {
-          id: 'meal',
-          name: '一份肯德基套餐',
-          amount: 50,
-          icon: '🍟',
-          description: '丰盛的套餐'
-        },
-        {
-          id: 'hotpot',
-          name: '一份全家桶',
-          amount: 100,
-          icon: '🍗',
-          description: '和家人分享'
-        },
-        {
-          id: 'custom',
-          name: '爱心红包',
-          amount: 'custom',
-          icon: '🧧',
-          description: '自定义金额',
-          isCustom: true
+          id: 'license',
+          name: '开源许可',
+          icon: '📄',
+          description: 'EPL-2.0 许可证',
+          url: `${REPO_URL}/blob/main/LICENSE`
         }
       ]
     }
   },
-  computed: {
-    currentQRCode() {
-      if (!this.selectedAmount || this.selectedAmount === 'custom') {
-        return `/images/${this.selectedPaymentType}/zdy.png`
-      }
-      return `/images/${this.selectedPaymentType}/${this.selectedAmount}.png`
-    },
-    paymentTypeText() {
-      return this.selectedPaymentType === 'wx' ? '微信支付' : '支付宝支付'
-    }
-  },
   methods: {
-    openPaymentModal(item) {
-      this.selectedAmount = item.amount
-      this.showPaymentModal = true
+    openLink(url) {
+      window.open(url, '_blank', 'noopener')
     },
-    closePaymentModal() {
-      this.showPaymentModal = false
-      this.selectedAmount = null
+    openQrModal() {
+      this.showQrModal = true
     },
-    switchPaymentType(type) {
-      this.selectedPaymentType = type
+    closeQrModal() {
+      this.showQrModal = false
     },
-    getSponsorItemByAmount(amount) {
-      return this.sponsorItems.find(item => item.amount === amount)
+    copyRepoUrl() {
+      Utils.copyToClipboard(this.repoUrl)
     }
   },
   template: `
     <div class="sponsor-page">
-      <!-- 赞助说明 -->
+      <!-- 说明 -->
       <div class="text-center mb-8">
         <div class="inline-flex items-center space-x-2 mb-4">
-          <span class="text-2xl">🎉</span>
-          <h2 class="text-2xl font-bold gradient-text">感谢您的支持</h2>
-          <span class="text-2xl">🎉</span>
+          <span class="text-2xl">💙</span>
+          <h2 class="text-2xl font-bold gradient-text">支持 JetBrains License Server Help</h2>
+          <span class="text-2xl">💙</span>
         </div>
         <p class="text-gray-600 max-w-2xl mx-auto">
-          如果这个项目对您有帮助，请考虑赞助我们的开发工作。您的每一份支持都是我们持续更新的动力！
+          本项目完全开源且免费。如果它对你有帮助，欢迎 Star、反馈问题或参与贡献，
+          这是对项目持续维护最好的支持。
         </p>
       </div>
 
-      <!-- 赞助选项 -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <!-- 资源入口 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         <div
-          v-for="item in sponsorItems"
+          v-for="item in supportItems"
           :key="item.id"
-          @click="openPaymentModal(item)"
+          @click="openLink(item.url)"
           class="sponsor-item bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-purple-200">
-          
-          <!-- 金额标签 -->
-          <div class="sponsor-price-tag" v-if="!item.isCustom">
-            ¥{{ item.amount }}
-          </div>
-          <div class="sponsor-price-tag custom" v-else>
-            自定义
-          </div>
-
-          <!-- 图标 -->
           <div class="text-center mb-4">
-            <div class="sponsor-icon">
-              {{ item.icon }}
-            </div>
+            <div class="sponsor-icon">{{ item.icon }}</div>
           </div>
-
-          <!-- 标题和描述 -->
           <div class="text-center">
             <h3 class="font-bold text-gray-900 mb-1">{{ item.name }}</h3>
             <p class="text-sm text-gray-500">{{ item.description }}</p>
@@ -125,71 +100,56 @@ const SponsorComponent = {
         </div>
       </div>
 
-      <!-- 感谢说明 -->
-      <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6">
-        <div class="text-center">
-          <h3 class="text-lg font-bold text-gray-900 mb-2">
-            <i class="fas fa-heart text-red-500 mr-2"></i>
-            特别感谢
-          </h3>
-          <p class="text-gray-600 text-sm leading-relaxed">
-            感谢每一位支持开源项目的朋友！您的赞助将用于服务器维护、域名续费和新功能开发。
-            <br>让我们一起让这个项目变得更好！
-          </p>
+      <!-- 仓库二维码 -->
+      <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 md:p-8">
+        <div class="flex flex-col md:flex-row items-center md:space-x-8 space-y-6 md:space-y-0">
+          <div class="text-center md:text-left flex-1">
+            <h3 class="text-lg font-bold text-gray-900 mb-2">
+              <i class="fab fa-github text-gray-800 mr-2"></i>扫码访问项目仓库
+            </h3>
+            <p class="text-gray-600 text-sm leading-relaxed mb-4">
+              使用手机扫码即可打开 GitHub 仓库，查看最新版本、提交反馈或参与贡献。
+            </p>
+            <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
+              <input :value="repoUrl" readonly class="flex-1 bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm min-w-0" />
+              <button @click="copyRepoUrl" class="px-3 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors whitespace-nowrap" title="复制仓库地址">
+                <i class="fas fa-copy"></i>
+              </button>
+            </div>
+          </div>
+          <div class="qr-code-frame cursor-pointer" @click="openQrModal" title="点击放大">
+            <img :src="qrImage" alt="项目仓库二维码" class="qr-code-image" />
+          </div>
         </div>
       </div>
 
-      <!-- 支付弹窗 -->
+      <!-- 二维码放大弹窗 -->
       <transition name="modal">
-        <div v-if="showPaymentModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+        <div v-if="showQrModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4" @click.self="closeQrModal">
           <div class="payment-modal">
-            <!-- 弹窗头部 -->
             <div class="payment-modal-header flex justify-between items-center">
-              <h3 class="payment-title">💖 扫码赞助</h3>
-              <button @click="closePaymentModal" class="close-button">
+              <h3 class="payment-title">💙 项目仓库</h3>
+              <button @click="closeQrModal" class="close-button">
                 <i class="fas fa-times"></i>
               </button>
             </div>
-
-            <!-- 弹窗内容 -->
             <div class="payment-modal-content">
-              <!-- 赞助信息 -->
               <div class="payment-info">
-                <div class="sponsor-title">感谢您的支持</div>
-                <div class="amount-info" v-if="selectedAmount !== 'custom'">
-                  {{ getSponsorItemByAmount(selectedAmount)?.name || '' }} - ¥{{ selectedAmount }}
-                </div>
-                <div class="amount-info" v-else>
-                  自定义金额支持
-                </div>
+                <div class="sponsor-title">扫码访问 GitHub</div>
+                <div class="amount-info">JetBrains License Server Help (Cloudflare)</div>
               </div>
-
-              <!-- 二维码 -->
               <div class="qr-code-container text-center">
                 <div class="qr-code-frame">
-                  <img :src="currentQRCode" :alt="paymentTypeText + '收款码'" class="qr-code-image">
+                  <img :src="qrImage" alt="项目仓库二维码" class="qr-code-image">
                 </div>
                 <div class="qr-tip">
                   <i class="fas fa-mobile-alt"></i>
-                  <span>长按保存二维码到手机相册</span>
+                  <span>使用手机相机或微信扫一扫</span>
                 </div>
               </div>
-
-              <!-- 支付方式切换 -->
-              <div class="payment-methods">
-                <button
-                  @click="switchPaymentType('wx')"
-                  :class="['payment-method-btn wechat', selectedPaymentType === 'wx' ? 'active' : '']">
-                  <i class="fab fa-weixin"></i>
-                  微信支付
-                </button>
-                <button
-                  @click="switchPaymentType('zfb')"
-                  :class="['payment-method-btn alipay', selectedPaymentType === 'zfb' ? 'active' : '']">
-                  <i class="fab fa-alipay"></i>
-                  支付宝
-                </button>
-              </div>
+              <button @click="openLink(repoUrl)" class="w-full btn-primary text-white py-2 px-4 rounded-lg font-medium">
+                <i class="fab fa-github mr-2"></i>在浏览器中打开
+              </button>
             </div>
           </div>
         </div>

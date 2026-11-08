@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 部署文档
+    url: https://github.com/Blduu/jetbrains-license-server-help-cloudflare/tree/main/docs/zh-CN
+    about: Cloudflare Workers 部署、接口与架构说明，提交 Issue 前建议先查阅
+  - name: English Docs
+    url: https://github.com/Blduu/jetbrains-license-server-help-cloudflare/tree/main/docs/en-US
+    about: Deployment, API and architecture documentation in English
+  - name: JVM 版仓库
+    url: https://github.com/Blduu/jetbrains-helper
+    about: 需要 Spring Boot / Java 版本时请前往该仓库
+  - name: 安全漏洞
+    url: https://github.com/Blduu/jetbrains-license-server-help-cloudflare/security/advisories/new
+    about: 请勿通过公开 Issue 报告安全问题

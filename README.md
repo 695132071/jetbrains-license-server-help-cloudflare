@@ -12,7 +12,20 @@
 <p align="center">
   <img src="https://img.shields.io/badge/node-%3E%3D20-339933?logo=node.js&logoColor=white" alt="Node.js >= 20" />
   <img src="https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Cloudflare-Workers-F38020?logo=cloudflare&logoColor=white" alt="Cloudflare Workers" />
   <img src="https://img.shields.io/badge/license-EPL--2.0-blue" alt="License EPL-2.0" />
+</p>
+
+<p align="center">
+  <a href="https://github.com/Blduu/jetbrains-helper"><strong>JVM 版（Spring Boot / Java）</strong></a> ·
+  <a href="./docs/README.md"><strong>文档</strong></a> ·
+  <a href="#english">English</a> / <a href="#中文">中文</a>
+</p>
+
+<p align="center">
+  <img src="./public/images/repo-qr.png" width="150" alt="项目仓库二维码" />
+  <br />
+  <sub>扫码访问本仓库：jetbrains-license-server-help-cloudflare</sub>
 </p>
 
 ---
@@ -21,7 +34,7 @@
 
 ### Overview
 
-This repository ports **[Jetbrains-LicenseServer-Help](https://github.com/Blduu/Jetbrains-LicenseServer-Help)** (Spring Boot / Java) to **one Cloudflare Worker** with **static assets**: same-origin web UI plus XML-RPC license server, activation codes, JRebel-style JSON endpoints, and ja-netfilter download. Ideal for **Git-connected deploys** on Cloudflare without running a JVM.
+This repository ports **[jetbrains-helper](https://github.com/Blduu/jetbrains-helper)** (Spring Boot / Java) to **one Cloudflare Worker** with **static assets**: same-origin web UI plus XML-RPC license server, activation codes, JRebel-style JSON endpoints, and ja-netfilter download. Ideal for **Git-connected deploys** on Cloudflare without running a JVM.
 
 ### Features
 
@@ -150,7 +163,7 @@ Detailed reference: [**docs/en-US/API.md**](./docs/en-US/API.md) · [**docs/zh-C
 
 ### 概述
 
-本仓库将原 **Jetbrains-LicenseServer-Help**（Spring Boot / Java）迁移为 **单个 Cloudflare Worker + 静态资源**：浏览器与 IDE 使用**同一域名**访问 Web 界面、许可证 XML-RPC、激活码接口、类 JRebel 接口及 ja-netfilter 下载，适合用 **Cloudflare 控制台连接 GitHub** 做持续部署，无需维护 JVM。
+本仓库将 **[jetbrains-helper](https://github.com/Blduu/jetbrains-helper)**（Spring Boot / Java）迁移为 **单个 Cloudflare Worker + 静态资源**：浏览器与 IDE 使用**同一域名**访问 Web 界面、许可证 XML-RPC、激活码接口、类 JRebel 接口及 ja-netfilter 下载，适合用 **Cloudflare 控制台连接 GitHub** 做持续部署，无需维护 JVM。
 
 ### 功能概览
 

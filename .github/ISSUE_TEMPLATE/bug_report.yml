@@ -1,0 +1,73 @@
+name: Bug Report
+description: 报告一个可复现的问题
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈！提交前请先搜索[已有 Issue](https://github.com/Blduu/jetbrains-license-server-help-cloudflare/issues)，
+        并确认已阅读 [部署文档](https://github.com/Blduu/jetbrains-license-server-help-cloudflare/blob/main/docs/zh-CN/DEPLOY.md)。
+        请勿粘贴真实的证书、私钥或他人隐私信息。
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 问题描述
+      description: 清晰、简洁地描述问题现象
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. 访问 ...
+        2. 调用 ...
+        3. 出现 ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望结果
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际结果
+    validations:
+      required: true
+
+  - type: dropdown
+    id: deploy
+    attributes:
+      label: 部署方式
+      options:
+        - Cloudflare Workers Builds（Git 集成）
+        - GitHub Actions
+        - 本地 wrangler dev
+        - 其他
+    validations:
+      required: true
+
+  - type: input
+    id: env
+    attributes:
+      label: 环境信息
+      placeholder: 例如 Node 20.x / Wrangler 4.x / 浏览器版本
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志或响应片段
+      description: 请先脱敏（移除域名、IP、证书内容等）
+      render: shell
+    validations:
+      required: false
