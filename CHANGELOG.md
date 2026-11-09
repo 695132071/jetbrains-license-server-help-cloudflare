@@ -8,6 +8,11 @@
 
 ### Added
 
+- **[NOTICE](./NOTICE)**：逐项列明第三方依赖及其许可证
+  （Wrangler / TypeScript / Vitest / @cloudflare/workers-types / ja-netfilter / CDN 前端库），
+  并声明 JetBrains 商标归属；
+- **LICENSE 版权声明**：在 EPL-2.0 全文后追加版权行与 `SPDX-License-Identifier: EPL-2.0`；
+- README 中英双语许可证章节补充 SPDX 标识、允许行为、分发义务与第三方组件说明；
 - `CHANGELOG.md`、Issue 模板与 PR 模板等社区规范文件；
 - `public/images/repo-qr.png`：指向本仓库的二维码资源；
 - 文档新增「无法获取存储库内容 / Cannot fetch repository contents」专节（中英双语）：
@@ -19,6 +24,8 @@
 
 ### Changed
 
+- `.gitignore` 重新整理并补充注释：明确 `node_modules/`、`.wrangler/`、`dist/`、
+  `coverage/`、`private/certs/`、`.workbuddy/` 等本地目录不入库；
 - 前端“赞助”页面改为“支持”页面：移除个人收款码，二维码统一指向本仓库；
 - 新增 JVM 版（[jetbrains-helper](https://github.com/Blduu/jetbrains-helper)）入口卡片与文档跳转；
 - README 增加 Cloudflare Workers 徽章、JVM 版链接与仓库二维码；

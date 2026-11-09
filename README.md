@@ -161,7 +161,17 @@ Detailed reference: [**docs/en-US/API.md**](./docs/en-US/API.md) · [**docs/zh-C
 
 ### License
 
-[Eclipse Public License 2.0](./LICENSE) (same family as many JetBrains OSS components — verify compatibility for your use case).
+Released under the **[Eclipse Public License 2.0](./LICENSE)** (SPDX: `EPL-2.0`).
+Copyright (c) 2026 BlueSky and individual contributors.
+
+- **You may** use, modify and redistribute this project commercially or otherwise;
+  EPL-2.0 is a *weak* copyleft license, so it only covers this project's own source.
+- **You must** keep `LICENSE` and [NOTICE](./NOTICE) when redistributing, and publish
+  source of any modified version of this project you distribute.
+- Third-party components (Wrangler, TypeScript, Vitest, ja-netfilter, CDN libraries)
+  keep their own licenses — see [NOTICE](./NOTICE).
+- JetBrains and its product names/icons are trademarks of JetBrains s.r.o.
+  This project is not affiliated with or endorsed by JetBrains.
 
 ---
 
@@ -226,4 +236,17 @@ npm run dev
 
 ### 许可证
 
-见仓库根目录 [LICENSE](./LICENSE)（EPL-2.0）。
+本项目基于 **[Eclipse Public License 2.0](./LICENSE)**（SPDX: `EPL-2.0`）发布。
+Copyright (c) 2026 BlueSky and individual contributors。
+
+| 项目 | 内容 |
+| --- | --- |
+| 许可证 | Eclipse Public License 2.0 |
+| SPDX 标识 | `EPL-2.0` |
+| 完整文本 | [LICENSE](./LICENSE) |
+| 第三方依赖 | [NOTICE](./NOTICE) |
+
+- **允许**：商业与非商业使用、修改、分发；EPL-2.0 为弱 copyleft，仅约束本项目自身源码。
+- **义务**：分发时保留 `LICENSE` 与 `NOTICE`；对外分发修改版时以 EPL-2.0 公开被修改部分的源码。
+- 第三方组件（Wrangler、TypeScript、Vitest、ja-netfilter、CDN 库）遵循各自许可证，见 [NOTICE](./NOTICE)。
+- JetBrains 及其产品名称、图标为 JetBrains s.r.o. 的商标，本项目与其无隶属或背书关系。

@@ -1,4 +1,4 @@
-# Dependencies & package manager
+# ==================== 依赖 ====================
 node_modules/
 .pnpm-store/
 .yarn/*
@@ -8,44 +8,52 @@ node_modules/
 !.yarn/sdks
 !.yarn/versions
 
-# Wrangler / Workers
+# ==================== Cloudflare / Wrangler ====================
 .wrangler/
 .dev.vars
 .mf/
 
-# Build output
+# ==================== 构建产物 ====================
 dist/
 .turbo/
 *.tsbuildinfo
 
-# Tests & coverage
+# ==================== 测试与覆盖率 ====================
 coverage/
 .nyc_output/
 vitest*.timestamp-*
 
-# Vite / Vitest cache (if used)
+# ==================== 工具缓存 ====================
 .vite/
 
-# Logs & OS
+# ==================== 日志与系统文件 ====================
 *.log
 .DS_Store
 Thumbs.db
 Desktop.ini
 
-# IDE
+# ==================== IDE / 编辑器 ====================
 .idea/
 *.iml
 .vscode/*
 !.vscode/extensions.json
 .cursor/
 
-# Environment
+# ==================== 本地环境变量 ====================
 .env
 .env.*
 !.env.example
 
-# PEM source on disk (committed output is src/generated/pem.ts)
+# ==================== 私钥源文件 ====================
+# 仓库只提交生成产物 src/generated/pem.ts；原始证书放在 private/certs/ 且不入库
 private/certs/
 
-# Optional local npm config
+# ==================== 本地工具与临时文件 ====================
+.workbuddy/
+.claude/
+CLAUDE.md
+*.tmp
+*.bak
+
+# ==================== 本地 npm 配置 ====================
 .npmrc.local
