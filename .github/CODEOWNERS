@@ -1,0 +1,12 @@
+# 默认代码所有者：所有变更需仓库维护者审阅
+* @Blduu
+
+# 关键路径单独指定
+/.github/               @Blduu
+/package.json           @Blduu
+/wrangler.jsonc         @Blduu
+/src/generated/pem.ts   @Blduu
+/public/_headers        @Blduu
+/docs/                  @Blduu
+/LICENSE                @Blduu
+/NOTICE                 @Blduu

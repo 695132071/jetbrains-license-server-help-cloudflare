@@ -13,6 +13,12 @@
   并声明 JetBrains 商标归属；
 - **LICENSE 版权声明**：在 EPL-2.0 全文后追加版权行与 `SPDX-License-Identifier: EPL-2.0`；
 - README 中英双语许可证章节补充 SPDX 标识、允许行为、分发义务与第三方组件说明；
+- **[README.en.md](./README.en.md)**：英文版独立成文件，主 README 改为中文优先并加语言切换；
+- 主 README 增加目录（TOC）、CI / PRs Welcome 徽章、技术栈表、健康检查、社区规范章节；
+- **[CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)**：Contributor Covenant 2.1 中文全文；
+- **[.github/dependabot.yml](./.github/dependabot.yml)**：npm 与 GitHub Actions 依赖自动更新；
+- **[.github/CODEOWNERS](./.github/CODEOWNERS)**：默认审阅人与关键路径归属；
+- 文档中说明 `test/` 为手写单元测试源码（非产物），避免误解。
 - `CHANGELOG.md`、Issue 模板与 PR 模板等社区规范文件；
 - `public/images/repo-qr.png`：指向本仓库的二维码资源；
 - 文档新增「无法获取存储库内容 / Cannot fetch repository contents」专节（中英双语）：
