@@ -76,9 +76,15 @@ Open the URL Wrangler prints (e.g. `http://127.0.0.1:8787`).
 
 ### Deploy
 
+> Before the first dashboard / button deploy, install the **Cloudflare Workers and Pages**
+> GitHub App and grant it access to this repository. Cloudflare reads the repo through the App,
+> not by anonymous cloning — a public repo alone is **not** enough, otherwise you get
+> **"Cannot fetch repository contents"**. Fix: [docs/en-US/DEPLOY.md](./docs/en-US/DEPLOY.md#cannot-fetch-repository-contents).
+
 | Path | Description |
 |------|-------------|
 | **Cloudflare Dashboard (recommended)** | [Workers Builds — Import a repository](https://developers.cloudflare.com/workers/ci-cd/builds/). Build: `npm ci && npm run build`. Deploy: `npx wrangler deploy`. **No GitHub Secrets** required. |
+| **wrangler CLI (no GitHub App)** | `npm ci && npx wrangler login && npx wrangler deploy`. Use this when Git integration cannot be authorized. |
 | **GitHub Actions** | Optional — workflow always **builds + tests**; **deploy** runs only if both `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are set under **Settings → Secrets and variables → Actions**. See [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml) and [docs/en-US/DEPLOY.md](./docs/en-US/DEPLOY.md#optional-github-actions). |
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/Blduu/jetbrains-license-server-help-cloudflare)
@@ -188,8 +194,14 @@ npm run dev
 
 ### 部署方式
 
-1. **推荐**：Cloudflare 控制台 [Workers & Pages](https://dash.cloudflare.com/?to=/:account/workers-and-pages) → **创建** → **从存储库导入**，构建命令 `npm ci && npm run build`，部署命令 `npx wrangler deploy`；**不必**在 GitHub 配置 Cloudflare Token。  
-2. **可选**：GitHub Actions — 未配置 Secret 时仍会 **构建与测试**，仅跳过发布；需 **Settings → Secrets and variables → Actions** 中同时设置 `CLOUDFLARE_API_TOKEN` 与 `CLOUDFLARE_ACCOUNT_ID` 才会执行部署。见 [.github/workflows/deploy.yml](./.github/workflows/deploy.yml) 与 [docs/zh-CN/DEPLOY.md](./docs/zh-CN/DEPLOY.md) 中「可选：GitHub Actions」一节。
+> **首次部署前**，需在 Cloudflare 安装 **Cloudflare Workers and Pages** GitHub App 并授予本仓库权限。
+> Cloudflare 是通过该 App 读取仓库的，**仅公开仓库并不够**，否则会报
+> **「无法获取存储库内容」**。处理步骤见
+> [docs/zh-CN/DEPLOY.md](./docs/zh-CN/DEPLOY.md#无法获取存储库内容)。
+
+1. **推荐**：Cloudflare 控制台 [Workers & Pages](https://dash.cloudflare.com/?to=/:account/workers-and-pages) → **创建** → **从存储库导入**，构建命令 `npm ci && npm run build`，部署命令 `npx wrangler deploy`；**不必**在 GitHub 配置 Cloudflare Token。
+2. **备选（无需 GitHub App）**：本机执行 `npm ci && npx wrangler login && npx wrangler deploy` 直接发布。
+3. **可选**：GitHub Actions — 未配置 Secret 时仍会 **构建与测试**，仅跳过发布；需 **Settings → Secrets and variables → Actions** 中同时设置 `CLOUDFLARE_API_TOKEN` 与 `CLOUDFLARE_ACCOUNT_ID` 才会执行部署。见 [.github/workflows/deploy.yml](./.github/workflows/deploy.yml) 与 [docs/zh-CN/DEPLOY.md](./docs/zh-CN/DEPLOY.md) 中「可选：GitHub Actions」一节。
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/Blduu/jetbrains-license-server-help-cloudflare)
 

@@ -8,6 +8,10 @@
    - **`src/generated/pem.ts`** — RSA 签名用嵌入密钥（见 [DEVELOPMENT.md](./DEVELOPMENT.md)）。
    - **`public/ja-netfilter.zip`** — 否则运行时 `GET /ja-netfilter` 会失败。
 2. Cloudflare 账号。
+3. **完成 GitHub 授权**：Cloudflare 通过 **Cloudflare Workers and Pages** GitHub App
+   读取仓库（不是匿名抓取）。首次部署前需在控制台安装该 App 并授予本仓库权限，
+   否则会报「无法获取存储库内容」。详见下文
+   [「无法获取存储库内容」](#无法获取存储库内容)。
 
 ## 推荐：Workers「从存储库导入」
 
@@ -63,10 +67,98 @@
 
 从 Java 构建产物（`target/classes/external/certificate/`）复制 `private.key`、`public.key`、`code-ca.crt`、`server-child-ca.crt` 到本地 `private/certs/`，执行 `npm run embed-pem`，提交更新后的 **`src/generated/pem.ts`** 并推送。
 
+## 「无法获取存储库内容」
+
+点击 Deploy to Cloudflare 按钮，或在控制台粘贴仓库地址后，出现：
+
+> 无法获取存储库内容
+
+**原因**：`deploy.workers.cloudflare.com` 现在会 **307 跳转**到控制台的
+「Deploy to Workers」流程：
+
+```
+https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/deploy-to-workers&repository=<repo>
+```
+
+该流程**通过 Cloudflare GitHub App 读取仓库**，而不是匿名抓取。
+仓库即使已公开（浏览器可访问、`git clone` 正常、`codeload` 返回 200），
+只要 App 未安装或未授予该仓库权限，仍会得到这个错误。
+
+按顺序检查：
+
+### 1. 安装 Cloudflare GitHub App
+
+打开 [Workers & Pages](https://dash.cloudflare.com/?to=/:account/workers-and-pages)，
+首次使用会提示 **Connect GitHub**，按引导安装 **Cloudflare Workers and Pages** App。
+
+### 2. 补齐仓库授权范围
+
+GitHub → **Settings → Applications → Cloudflare Workers and Pages → Configure**：
+
+- **Repository access** 选 **All repositories**，或
+- 选 **Only select repositories**，并在列表中勾选
+  **`Blduu/jetbrains-license-server-help-cloudflare`**
+
+> 若之前只授权了部分仓库（例如只选了 `jetbrains-helper`），本仓库就会读不到。
+
+### 3. 确认 Cloudflare 绑定的是仓库所有者的 GitHub 账号
+
+Cloudflare 侧授权的账号必须是 **`Blduu`**。若浏览器当时登录的是另一个账号，
+即使是公开仓库也可能无法读取。
+
+### 4. 改用控制台入口直接导入
+
+绕开按钮跳转，直接访问
+[Workers & Pages → Create → Import a repository](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create)，
+或按上文「推荐：Workers『从存储库导入』」操作。
+
+### 5. 本地复现验证
+
+下面命令用于确认**仓库侧没问题**（能返回 `200` 就说明不是仓库的锅）：
+
+```bash
+# 匿名读取仓库元数据
+curl -s https://api.github.com/repos/Blduu/jetbrains-license-server-help-cloudflare | grep -E '"private"|"visibility"'
+# 匿名拉取源码包（Cloudflare 侧走的就是这类接口）
+curl -sI -L https://codeload.github.com/Blduu/jetbrains-license-server-help-cloudflare/tar.gz/refs/heads/main | head -1
+```
+
+### 6. 不走 Git 集成（见下节）
+
+若暂时无法完成 App 授权，直接用 **wrangler CLI** 发布，完全不经过 GitHub App。
+
+## 备选：本机 wrangler CLI 部署
+
+不需要 GitHub App，也不需要 Workers Builds：
+
+```bash
+git clone https://github.com/Blduu/jetbrains-license-server-help-cloudflare.git
+cd jetbrains-license-server-help-cloudflare
+
+npm ci
+npx wrangler login     # 浏览器授权一次
+npx wrangler whoami    # 确认账号与权限（会列出 Account ID / 权限）
+npx wrangler deploy    # 发布
+```
+
+发布成功后会输出访问地址，形如
+`https://jetbrains-license-server-help-cloudflare.<subdomain>.workers.dev`。
+
+部署前可先本地自检（不做任何线上变更）：
+
+```bash
+npm run build                                  # tsc 类型检查
+npx wrangler deploy --dry-run --outdir /tmp/out # 只打包，不上传
+```
+
+> CLI 部署属于**直接上传**。若之后想改为「推送即部署」，
+> 可在控制台该 Worker 的 **Settings → Build** 中再连接 Git 仓库。
+
 ## 故障排查
 
 | 现象 | 处理 |
 |------|------|
+| 提示「无法获取存储库内容」 | Cloudflare GitHub App 未安装或未授权本仓库。见 [「无法获取存储库内容」](#无法获取存储库内容)。 |
 | Worker 名称不一致 | 将控制台 Worker 名与 `wrangler.jsonc` → `name` 对齐，或改配置后重新提交。 |
 | 缺少 `pem.ts` / embed 失败 | 提交 `src/generated/pem.ts`，或在 CI 中提供 `private/certs/`。 |
 | 找不到 `wrangler` | 确认 `npm ci` 未用 `--omit=dev` 误删生产依赖；`wrangler` 在 `dependencies` 中。 |

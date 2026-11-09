@@ -6,17 +6,23 @@
 
 ## [Unreleased]
 
+### Added
+
+- `CHANGELOG.md`、Issue 模板与 PR 模板等社区规范文件；
+- `public/images/repo-qr.png`：指向本仓库的二维码资源；
+- 文档新增「无法获取存储库内容 / Cannot fetch repository contents」专节（中英双语）：
+  说明 `deploy.workers.cloudflare.com` 已 307 跳转到控制台流程、必须通过
+  **Cloudflare Workers and Pages** GitHub App 授权仓库，并提供逐项排查与本地验证命令；
+- 文档新增「备选：本机 wrangler CLI 部署」：不经过 GitHub App 的直接发布方式，
+  含 `wrangler deploy --dry-run` 预检；
+- README / DEPLOY.md 增加首次部署前置说明与 CLI 备选入口。
+
 ### Changed
 
 - 前端“赞助”页面改为“支持”页面：移除个人收款码，二维码统一指向本仓库；
 - 新增 JVM 版（[jetbrains-helper](https://github.com/Blduu/jetbrains-helper)）入口卡片与文档跳转；
 - README 增加 Cloudflare Workers 徽章、JVM 版链接与仓库二维码；
 - README 中的上游项目链接更新为 `Blduu/jetbrains-helper`。
-
-### Added
-
-- `CHANGELOG.md`、Issue 模板与 PR 模板等社区规范文件；
-- `public/images/repo-qr.png`：指向本仓库的二维码资源。
 
 ## [1.0.0]
 
